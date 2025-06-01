@@ -1,0 +1,547 @@
+// Dados da aplicação
+const appData = {
+  "fundamentos": [
+    {
+      "titulo": "Trabalho como Princípio Educativo",
+      "definicao": "O trabalho é visto como eixo central da educação, unindo teoria e prática na formação humana.",
+      "caracteristicas": ["União entre teoria e prática", "Trabalho socialmente necessário", "Superação da dicotomia manual/intelectual", "Formação através da produção"]
+    },
+    {
+      "titulo": "Formação Omnilateral", 
+      "definicao": "Desenvolvimento integral do ser humano em todas as suas dimensões: física, intelectual, estética e moral.",
+      "caracteristicas": ["Desenvolvimento integral", "Múltiplas dimensões humanas", "Superação da fragmentação", "Formação completa da personalidade"]
+    },
+    {
+      "titulo": "Politecnia",
+      "definicao": "Domínio dos fundamentos científicos e técnicos dos principais ramos da produção moderna.",
+      "caracteristicas": ["Base científica da produção", "Múltiplas especialidades técnicas", "Compreensão do processo produtivo", "Versatilidade profissional"]
+    },
+    {
+      "titulo": "Auto-organização",
+      "definicao": "Participação ativa dos estudantes na gestão e organização da vida escolar e do processo educativo.",
+      "caracteristicas": ["Gestão democrática", "Participação estudantil", "Autodireção", "Desenvolvimento da autonomia"]
+    }
+  ],
+  "teoricos": [
+    {
+      "nome": "Karl Marx",
+      "periodo": "1818-1883", 
+      "contribuicoes": "Fundamentos teóricos da educação socialista. União ensino-trabalho. Educação politécnica.",
+      "conceitos": "Politecnia, Omnilateralidade, Trabalho como princípio educativo"
+    },
+    {
+      "nome": "Friedrich Engels",
+      "periodo": "1820-1895",
+      "contribuicoes": "Educação para o trabalho produtivo desde os 9 anos. Formação integral.",
+      "conceitos": "Instrução integral, Educação produtiva, Trabalho manual e intelectual"
+    },
+    {
+      "nome": "Nadejda Krupskaya", 
+      "periodo": "1869-1939",
+      "contribuicoes": "Escola do trabalho vs escola livresca. Auto-organização estudantil. Educação para a democracia.",
+      "conceitos": "Escola livre, Auto-organização, Educação não-sexista"
+    },
+    {
+      "nome": "Moisey Pistrak",
+      "periodo": "1888-1937",
+      "contribuicoes": "Sistema de complexos temáticos. Escola como centro cultural da comunidade.",
+      "conceitos": "Complexos temáticos, Atualidade, Auto-direção"
+    },
+    {
+      "nome": "Anton Makarenko",
+      "periodo": "1888-1939", 
+      "contribuicoes": "Pedagogia do coletivo. Formação do 'homem novo' socialista.",
+      "conceitos": "Coletividade, Disciplina consciente, Personalidade socialista"
+    },
+    {
+      "nome": "Antonio Gramsci",
+      "periodo": "1891-1937", 
+      "contribuicoes": "Escola Unitária. Defesa da importância da cultura popular na formação de sujeitos politizados.",
+      "conceitos": "Cultura Popular, Práxis, Hegemonia"
+    },
+    {
+      "nome": "Paulo Freire",
+      "periodo": "1921-1997",
+      "contribuicoes": "Pedagogia crítica e libertadora. Educação como prática da liberdade.",
+      "conceitos": "Conscientização, Práxis, Educação problematizadora"
+    },
+    {
+      "nome": "Dermeval Saviani",
+      "periodo": "1943-atual",
+      "contribuicoes": "Pedagogia histórico-crítica. Socialização do saber sistematizado.",
+      "conceitos": "Prática social, Instrumentalização, Catarse"
+    }
+  ],
+  "marcos_historicos": [
+    {
+      "ano": 1848,
+      "evento": "Manifesto Comunista",
+      "descricao": "Marx e Engels estabelecem os primeiros fundamentos da educação socialista"
+    },
+    {
+      "ano": 1917,
+      "evento": "Revolução Russa", 
+      "descricao": "Contexto histórico que possibilitou a primeira experiência educacional socialista em larga escala"
+    },
+    {
+      "ano": 1918,
+      "evento": "Escola Única do Trabalho",
+      "descricao": "Criação da primeira experiência sistemática de educação socialista na URSS"
+    },
+    {
+      "ano": 1928,
+      "evento": "Fundamentos da Escola do Trabalho",
+      "descricao": "Pistrak publica a principal obra sobre a pedagogia socialista soviética"
+    },
+    {
+      "ano": 1970,
+      "evento": "Pedagogia do Oprimido",
+      "descricao": "Paulo Freire publica sua principal obra sobre educação crítica"
+    },
+    {
+      "ano": 1983,
+      "evento": "Pedagogia Histórico-Crítica",
+      "descricao": "Saviani desenvolve a pedagogia socialista brasileira"
+    },
+    {
+      "ano": 1990,
+      "evento": "MST e Educação do Campo",
+      "descricao": "Movimento Sem Terra adota princípios da pedagogia socialista"
+    }
+  ],
+  "quiz": [
+    {
+      "pergunta": "Qual é o princípio central da pedagogia socialista?",
+      "opcoes": ["Memorização", "Trabalho como princípio educativo", "Competição", "Individualismo"],
+      "resposta_correta": 1
+    },
+    {
+      "pergunta": "Quem criou o Sistema de Complexos Temáticos?",
+      "opcoes": ["Marx", "Freire", "Pistrak", "Makarenko"], 
+      "resposta_correta": 2
+    },
+    {
+      "pergunta": "O que significa formação omnilateral?",
+      "opcoes": ["Especialização precoce", "Desenvolvimento integral", "Formação técnica", "Educação elitista"],
+      "resposta_correta": 1
+    },
+    {
+      "pergunta": "A Escola Única do Trabalho foi criada em qual contexto?",
+      "opcoes": ["Revolução Francesa", "Revolução Industrial", "Revolução Russa", "Revolução Cubana"],
+      "resposta_correta": 2
+    }
+  ]
+};
+
+// Estado da aplicação
+let currentQuestionIndex = 0;
+let quizScore = 0;
+let selectedAnswer = null;
+
+// Elementos DOM
+const navLinks = document.querySelectorAll('.nav-link');
+const sections = document.querySelectorAll('.section');
+const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+const navMenu = document.querySelector('.nav-menu');
+
+// Inicialização
+document.addEventListener('DOMContentLoaded', function() {
+  initializeNavigation();
+  initializeFundamentos();
+  initializeTeoricos();
+  initializeTimeline();
+  initializeSearch();
+  initializeQuiz();
+  initializeModals();
+  initializeMobileMenu();
+});
+
+// Navegação
+function initializeNavigation() {
+  // Navegação por links do menu
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetSection = link.getAttribute('data-section');
+      showSection(targetSection);
+      updateActiveNavLink(link);
+    });
+  });
+
+  // Botões de navegação da hero
+  const navigateButtons = document.querySelectorAll('.btn-navigate');
+  navigateButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.getAttribute('data-target');
+      showSection(target);
+      updateActiveNavLink(document.querySelector(`[data-section="${target}"]`));
+    });
+  });
+}
+
+function showSection(sectionId) {
+  sections.forEach(section => {
+    section.classList.remove('active');
+  });
+  
+  const targetSection = document.getElementById(sectionId);
+  if (targetSection) {
+    targetSection.classList.add('active');
+  }
+}
+
+function updateActiveNavLink(activeLink) {
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+  });
+  activeLink.classList.add('active');
+}
+
+// Menu Mobile
+function initializeMobileMenu() {
+  mobileMenuToggle.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+  });
+}
+
+// Fundamentos
+function initializeFundamentos() {
+  const expandButtons = document.querySelectorAll('.expand-btn');
+  
+  expandButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const card = btn.closest('.fundamento-card');
+      const fundamentoType = card.getAttribute('data-fundamento');
+      showFundamentoModal(fundamentoType);
+    });
+  });
+
+  // Também permite clicar no card inteiro
+  const fundamentoCards = document.querySelectorAll('.fundamento-card');
+  fundamentoCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const fundamentoType = card.getAttribute('data-fundamento');
+      showFundamentoModal(fundamentoType);
+    });
+  });
+}
+
+function showFundamentoModal(type) {
+  const fundamentoMap = {
+    'trabalho': 0,
+    'omnilateral': 1,
+    'politecnia': 2,
+    'autoorganizacao': 3
+  };
+  
+  const fundamento = appData.fundamentos[fundamentoMap[type]];
+  if (!fundamento) return;
+
+  const modal = document.getElementById('fundamento-modal');
+  const title = document.getElementById('modal-title');
+  const definition = document.getElementById('modal-definition');
+  const characteristics = document.getElementById('modal-characteristics');
+
+  title.textContent = fundamento.titulo;
+  definition.textContent = fundamento.definicao;
+  
+  characteristics.innerHTML = '';
+  fundamento.caracteristicas.forEach(char => {
+    const li = document.createElement('li');
+    li.textContent = char;
+    characteristics.appendChild(li);
+  });
+
+  modal.style.display = 'block';
+}
+
+// Teóricos
+function initializeTeoricos() {
+  const teoricoCards = document.querySelectorAll('.teorico-card');
+  
+  teoricoCards.forEach(card => {
+    const btn = card.querySelector('.btn');
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const teoricoType = card.getAttribute('data-teorico');
+      showTeoricoModal(teoricoType);
+    });
+  });
+}
+
+function showTeoricoModal(type) {
+  const teoricoMap = {
+    'marx': 0,
+    'engels': 1,
+    'krupskaya': 2,
+    'pistrak': 3,
+    'makarenko': 4,
+    'gramsci': 5,
+    'freire': 6,
+    'saviani': 7
+  };
+  
+  const teorico = appData.teoricos[teoricoMap[type]];
+  if (!teorico) return;
+
+  const modal = document.getElementById('teorico-modal');
+  const title = document.getElementById('teorico-modal-title');
+  const periodo = document.getElementById('teorico-modal-periodo');
+  const contribuicoes = document.getElementById('teorico-modal-contribuicoes');
+  const conceitos = document.getElementById('teorico-modal-conceitos');
+
+  title.textContent = teorico.nome;
+  periodo.textContent = `Período: ${teorico.periodo}`;
+  contribuicoes.textContent = teorico.contribuicoes;
+  conceitos.textContent = teorico.conceitos;
+
+  modal.style.display = 'block';
+}
+
+// Timeline
+function initializeTimeline() {
+  const timelineItems = document.querySelectorAll('.timeline-item');
+  
+  timelineItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const ano = parseInt(item.getAttribute('data-ano'));
+      showTimelineModal(ano);
+    });
+  });
+}
+
+function showTimelineModal(ano) {
+  const marco = appData.marcos_historicos.find(m => m.ano === ano);
+  if (!marco) return;
+
+  const modal = document.getElementById('timeline-modal');
+  const title = document.getElementById('timeline-modal-title');
+  const descricao = document.getElementById('timeline-modal-descricao');
+
+  title.textContent = `${marco.ano} - ${marco.evento}`;
+  descricao.textContent = marco.descricao;
+
+  modal.style.display = 'block';
+}
+
+// Sistema de busca
+function initializeSearch() {
+  const searchInput = document.getElementById('search-input');
+  const conceitoItems = document.querySelectorAll('.conceito-item');
+
+  searchInput.addEventListener('input', (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    
+    conceitoItems.forEach(item => {
+      const title = item.querySelector('h3').textContent.toLowerCase();
+      const content = item.querySelector('p').textContent.toLowerCase();
+      
+      if (title.includes(searchTerm) || content.includes(searchTerm)) {
+        item.classList.remove('hidden');
+      } else {
+        item.classList.add('hidden');
+      }
+    });
+  });
+}
+
+// Quiz
+function initializeQuiz() {
+  resetQuiz();
+  loadQuestion();
+  
+  document.getElementById('next-btn').addEventListener('click', nextQuestion);
+  document.getElementById('restart-btn').addEventListener('click', resetQuiz);
+}
+
+function loadQuestion() {
+  if (currentQuestionIndex >= appData.quiz.length) {
+    showQuizResults();
+    return;
+  }
+
+  const question = appData.quiz[currentQuestionIndex];
+  const questionText = document.getElementById('question-text');
+  const optionsContainer = document.getElementById('options-container');
+  const feedback = document.getElementById('quiz-feedback');
+  const nextBtn = document.getElementById('next-btn');
+
+  // Atualizar progresso
+  updateQuizProgress();
+
+  // Limpar estado anterior
+  feedback.style.display = 'none';
+  nextBtn.style.display = 'none';
+  selectedAnswer = null;
+
+  // Carregar pergunta
+  questionText.textContent = question.pergunta;
+  
+  // Carregar opções
+  optionsContainer.innerHTML = '';
+  question.opcoes.forEach((opcao, index) => {
+    const button = document.createElement('button');
+    button.className = 'option-btn';
+    button.textContent = opcao;
+    button.addEventListener('click', () => selectAnswer(index, button));
+    optionsContainer.appendChild(button);
+  });
+}
+
+function selectAnswer(answerIndex, buttonElement) {
+  // Remover seleção anterior
+  document.querySelectorAll('.option-btn').forEach(btn => {
+    btn.classList.remove('selected');
+  });
+
+  // Marcar nova seleção
+  buttonElement.classList.add('selected');
+  selectedAnswer = answerIndex;
+
+  // Verificar resposta
+  checkAnswer();
+}
+
+function checkAnswer() {
+  if (selectedAnswer === null) return;
+
+  const question = appData.quiz[currentQuestionIndex];
+  const isCorrect = selectedAnswer === question.resposta_correta;
+  const feedback = document.getElementById('quiz-feedback');
+  const nextBtn = document.getElementById('next-btn');
+  const options = document.querySelectorAll('.option-btn');
+
+  // Desabilitar todas as opções
+  options.forEach((option, index) => {
+    option.disabled = true;
+    if (index === question.resposta_correta) {
+      option.classList.add('correct');
+    } else if (index === selectedAnswer && !isCorrect) {
+      option.classList.add('incorrect');
+    }
+  });
+
+  // Mostrar feedback
+  feedback.style.display = 'block';
+  if (isCorrect) {
+    feedback.className = 'quiz-feedback correct';
+    feedback.textContent = '✓ Resposta correta! Muito bem!';
+    quizScore++;
+    updateScore();
+  } else {
+    feedback.className = 'quiz-feedback incorrect';
+    feedback.textContent = '✗ Resposta incorreta. A resposta correta é: ' + question.opcoes[question.resposta_correta];
+  }
+
+  // Mostrar botão próxima
+  nextBtn.style.display = 'block';
+}
+
+function nextQuestion() {
+  currentQuestionIndex++;
+  loadQuestion();
+}
+
+function updateQuizProgress() {
+  const currentQuestionSpan = document.getElementById('current-question');
+  const totalQuestionsSpan = document.getElementById('total-questions');
+  const progressFill = document.getElementById('progress-fill');
+
+  currentQuestionSpan.textContent = currentQuestionIndex + 1;
+  totalQuestionsSpan.textContent = appData.quiz.length;
+  
+  const progress = ((currentQuestionIndex + 1) / appData.quiz.length) * 100;
+  progressFill.style.width = progress + '%';
+}
+
+function updateScore() {
+  const scoreSpan = document.getElementById('score');
+  scoreSpan.textContent = quizScore;
+}
+
+function showQuizResults() {
+  const questionText = document.getElementById('question-text');
+  const optionsContainer = document.getElementById('options-container');
+  const feedback = document.getElementById('quiz-feedback');
+  const nextBtn = document.getElementById('next-btn');
+  const restartBtn = document.getElementById('restart-btn');
+
+  questionText.textContent = 'Quiz Finalizado!';
+  optionsContainer.innerHTML = '';
+  
+  const percentage = Math.round((quizScore / appData.quiz.length) * 100);
+  let message = '';
+  
+  if (percentage >= 80) {
+    message = '🎉 Excelente! Você demonstra um ótimo domínio dos conceitos da pedagogia socialista!';
+  } else if (percentage >= 60) {
+    message = '👍 Bom trabalho! Você tem uma base sólida, mas pode aprofundar alguns conceitos.';
+  } else {
+    message = '📚 Continue estudando! Revise os materiais para fortalecer seu conhecimento.';
+  }
+
+  feedback.style.display = 'block';
+  feedback.className = 'quiz-feedback';
+  feedback.innerHTML = `
+    <h4>Resultado Final</h4>
+    <p><strong>Pontuação: ${quizScore} de ${appData.quiz.length} (${percentage}%)</strong></p>
+    <p>${message}</p>
+  `;
+
+  nextBtn.style.display = 'none';
+  restartBtn.style.display = 'block';
+}
+
+function resetQuiz() {
+  currentQuestionIndex = 0;
+  quizScore = 0;
+  selectedAnswer = null;
+  updateScore();
+  
+  const restartBtn = document.getElementById('restart-btn');
+  restartBtn.style.display = 'none';
+  
+  loadQuestion();
+}
+
+// Modais
+function initializeModals() {
+  const modals = document.querySelectorAll('.modal');
+  const closeButtons = document.querySelectorAll('.close');
+
+  // Fechar modal ao clicar no X
+  closeButtons.forEach(closeBtn => {
+    closeBtn.addEventListener('click', () => {
+      modals.forEach(modal => {
+        modal.style.display = 'none';
+      });
+    });
+  });
+
+  // Fechar modal ao clicar fora
+  modals.forEach(modal => {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+  });
+
+  // Fechar modal com ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      modals.forEach(modal => {
+        modal.style.display = 'none';
+      });
+    }
+  });
+}
+
+// Utilitários
+function smoothScrollTo(element) {
+  element.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
+  });
+}
